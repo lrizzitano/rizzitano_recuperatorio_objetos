@@ -1,4 +1,6 @@
 import src.noHaySuficientesMiebrosException.NoHaySuficientesMiembrosException
+import src.categorias.*
+import src.objetosMagicos.*
 
 
 class Participante {
@@ -22,7 +24,7 @@ class Mago inherits Participante {
     const property resistenciaMagica
     var energiaMagica
     const objetosMagicos = #{}
-    var categoria
+    var property categoria // Como aclara que puede cambiar con el tiempo agrego el getter y setter
 
     override method poderTotal() =
         objetosMagicos.sum({objeto => objeto.poderAportado(self)}) * poderInnato
@@ -30,19 +32,21 @@ class Mago inherits Participante {
     override method esVencidoPor(unParticipante) =
         categoria.esVencidoPor(self, unParticipante)
 
+    override method perderAnte(unParticipante) {
+        // Aun si un mago inmortal pertenece a un gremio que pierde una batalla, el mago en particular no pierde ante el atacante
+        if (categoria != inmortal)
+            categoria.transferirEnergiaMagica(self, unParticipante)
+    }   
+
+    override method ganarEnergiaMagica(unaCantidad) {
+        energiaMagica += unaCantidad
+    } 
+
     method perderEnergiaMagica(unPorcentaje) {
         const energiaPerdida = energiaMagica * unPorcentaje / 100
         energiaMagica -= energiaPerdida
         return energiaPerdida
     }
-
-    override method ganarEnergiaMagica(unaCantidad) {
-        energiaMagica += unaCantidad
-    }
-
-    override method perderAnte(unParticipante) {
-        categoria.transferirEnergiaMagica(self, unParticipante)
-    }    
 }
 
 class Gremio inherits Participante {
@@ -70,7 +74,12 @@ class Gremio inherits Participante {
         self.miembroLider().ganarEnergiaMagica(unaCantidad)
     }
 
+    // Asumo que cuando un gremio pierde una batalla, todos sus integrantes pierden contra el atacante
     override method perderAnte(unParticipante) {
         miembros.forEach({miembro => miembro.perderAnte(unParticipante)})
     }
 } 
+
+// Tanto lo magos como los gremios entienden los mensajes de la clase Participante
+// y pueden ser usados de manera polimorfica, por lo que pueden ser tratados indistintamente
+// a la hora de simular batallas o de crear gremios compuestos por otros gremios

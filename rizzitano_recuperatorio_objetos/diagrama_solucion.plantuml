@@ -17,8 +17,10 @@ class Mago {
     categoria
     --
     poderTotal()
-    desafiar(unParticipante)
     esVencidoPor(unParticipante)
+    perderEnergiaMagica(unPorcentaje)
+    ganarEnergiaMagica(unaCantidad)
+    perderAnte(unParticipante)
 }
 
 class Gremio {
@@ -26,11 +28,18 @@ class Gremio {
     --
     poderTotal()
     energiaMagica()
-    desafiar(unParticipante)
+    resistenciaMagica()
     esVencidoPor(unParticipante)
+    miembroLider()
+    ganarEnergiaMagica(unaCantidad)
+    perderAnte(unParticipante)
 }
 
-class Categoria {
+interface Categoria {
+    esVencidoPor(atacado, atacante)
+}
+
+class CategoriaMortal {
     multiplicadorDeResistencia
     porcentajeDePerdida
     --
@@ -50,18 +59,19 @@ abstract class ObjetoMagicoConPoderBase {
     poderBase
     --
     poderAportado(unMago)
+    poderExtra(unMago)
 }
 
 class Varita {
-    poderAportado(unMago)
+    poderExtra(unMago)
 }
 
 class Tunica {
-    poderAportado(unMago)
+    poderExtra(unMago)
 }
 
 class TunicaEpica {
-    poderAportado(unMago)
+    poderExtra(unMago)
 }
 
 class Amuleto {
@@ -87,8 +97,7 @@ Varita -u-|> ObjetoMagicoConPoderBase
 Tunica -u-|> ObjetoMagicoConPoderBase
 TunicaEpica -u-|> Tunica
 
-aprendiz .u.|> Categoria
-veterano .u.|> Categoria
+CategoriaMortal .u.|> Categoria
 inmortal .u.|> Categoria
 
 @enduml
