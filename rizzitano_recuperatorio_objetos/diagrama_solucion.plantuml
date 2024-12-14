@@ -26,12 +26,16 @@ class Gremio {
     esVencidoPor(unParticipante)
 }
 
-abstract class Categoria {
+class Categoria {
     multiplicadorDeResistencia
     porcentajeDePerdida
     --
-    esVencidoPor(desafiado, desafiante)
-    transferirEnergiaMagica(unParticipante, otroParticipante)
+    esVencidoPor(atacado, atacante)
+    transferirEnergiaMagica(atacado, atacante)
+}
+
+object inmortal {
+    esVencidoPor(atacado, atacante)
 }
 
 interface ObjetoMagico {

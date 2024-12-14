@@ -1,4 +1,5 @@
 class Mago {
+    const property nombre
     const poderInnato
     const property resistenciaMagica
     var energiaMagica
