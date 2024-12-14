@@ -1,11 +1,15 @@
 @startuml torneoDeMagos
 
-interface Participante {
-    desafiar(unParticipante)
+abstract class Participante {
+    poderTotal()
     esVencidoPor(unParticipante)
+    desafiar(unParticipante)
+    ganarEnergiaMagica(unaCantidad)
+    perderAnte(unParticipante)
 }
 
 class Mago {
+    nombre
     poderInnato
     resistenciaMagica
     energiaMagica
@@ -68,8 +72,8 @@ object ojota {
     poderAportado(unMago)
 }
 
-Mago ..|> Participante
-Gremio ..|> Participante
+Mago -u-|> Participante
+Gremio -u-|> Participante
 Gremio -> "*" Mago
 
 Mago --> "*" ObjetoMagico

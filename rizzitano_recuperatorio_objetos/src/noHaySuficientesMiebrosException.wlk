@@ -1,0 +1,1 @@
+class NoHaySuficientesMiembrosException inherits Exception(message = "No hay suficientes miembros como para crear el gremio") { }
