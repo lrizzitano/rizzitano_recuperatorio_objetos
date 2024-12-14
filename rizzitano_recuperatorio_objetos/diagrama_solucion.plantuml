@@ -1,0 +1,86 @@
+@startuml torneoDeMagos
+
+interface Participante {
+    desafiar(unParticipante)
+    esVencidoPor(unParticipante)
+}
+
+class Mago {
+    poderInnato
+    resistenciaMagica
+    energiaMagica
+    objetosMagicos
+    categoria
+    --
+    poderTotal()
+    desafiar(unParticipante)
+    esVencidoPor(unParticipante)
+}
+
+class Gremio {
+    miembros
+    --
+    poderTotal()
+    energiaMagica()
+    desafiar(unParticipante)
+    esVencidoPor(unParticipante)
+}
+
+abstract class Categoria {
+    multiplicadorDeResistencia
+    porcentajeDePerdida
+    --
+    esVencidoPor(desafiado, desafiante)
+    transferirEnergiaMagica(unParticipante, otroParticipante)
+}
+
+interface ObjetoMagico {
+    poderAportado(unMago)
+}
+
+abstract class ObjetoMagicoConPoderBase {
+    poderBase
+    --
+    poderAportado(unMago)
+}
+
+class Varita {
+    poderAportado(unMago)
+}
+
+class Tunica {
+    poderAportado(unMago)
+}
+
+class TunicaEpica {
+    poderAportado(unMago)
+}
+
+class Amuleto {
+    poderAportado(unMago)
+}
+
+object ojota {
+    poderAportado(unMago)
+}
+
+Mago ..|> Participante
+Gremio ..|> Participante
+Gremio -> "*" Mago
+
+Mago --> "*" ObjetoMagico
+Mago --> Categoria
+
+Amuleto .u.|> ObjetoMagico
+ojota .u.|> ObjetoMagico
+ObjetoMagicoConPoderBase .u.|> ObjetoMagico
+
+Varita -u-|> ObjetoMagicoConPoderBase
+Tunica -u-|> ObjetoMagicoConPoderBase
+TunicaEpica -u-|> Tunica
+
+aprendiz .u.|> Categoria
+veterano .u.|> Categoria
+inmortal .u.|> Categoria
+
+@enduml
