@@ -26,6 +26,8 @@ class Mago inherits Participante {
     const objetosMagicos = #{}
     var property categoria // Como aclara que puede cambiar con el tiempo agrego el getter y setter
 
+    method energiaMagica() = energiaMagica
+    
     override method poderTotal() =
         objetosMagicos.sum({objeto => objeto.poderAportado(self)}) * poderInnato
 
@@ -46,6 +48,10 @@ class Mago inherits Participante {
         const energiaPerdida = energiaMagica * unPorcentaje / 100
         energiaMagica -= energiaPerdida
         return energiaPerdida
+    }
+
+    method agregarObjetoMagico(unObjeto) {
+        objetosMagicos.add(unObjeto)
     }
 }
 
@@ -83,3 +89,6 @@ class Gremio inherits Participante {
 // Tanto lo magos como los gremios entienden los mensajes de la clase Participante
 // y pueden ser usados de manera polimorfica, por lo que pueden ser tratados indistintamente
 // a la hora de simular batallas o de crear gremios compuestos por otros gremios
+
+const harryPostre = new Mago(nombre = "Harry Potter", poderInnato = 10, resistenciaMagica = 15, energiaMagica = 100, categoria = veterano)
+const voldemort = new Mago(nombre = "volde", poderInnato = 10, resistenciaMagica = 15, energiaMagica = 100, categoria = veterano)

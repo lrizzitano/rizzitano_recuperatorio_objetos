@@ -27,3 +27,7 @@ class Amuleto {
 object ojota {
     method poderAportado(unMago) = unMago.nombre().length() * 10
 }
+
+const varitaPiola = new Varita(poderBase = 10)
+const capaPolenta = new Tunica(poderBase = 5)
+const capaRePolenta = new TunicaEpica(poderBase = 6)
